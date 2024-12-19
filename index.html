@@ -3,14 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Карта фестиваля</title>
+    <title>Ночь студента 2025</title>
     <style>
+        @font-face {
+            font-family: 'Involve';
+            src: url('fonts/involve/Involve-Regular.ttf') format('truetype'),
+                 url('fonts/involve/Involve-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
             margin: 0;
+            font-family: 'Involve', Arial, sans-serif;
             background-color: #262626;
-            color: white;
-            font-family: Arial, sans-serif;
+            color: #ffffff;
             text-align: center;
+            line-height: 1.15;
+            letter-spacing: 0.02em;
+        }
+
+		h1 {
+			text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+		}
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 0;
+            font-size: 14px;
+            color: #ffffff;
+        }
+
+        .nav-bar div {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+
+        .content {
+            margin-top: 50px;
+        }
+
+        .logo-div {
+			display: block;
+			max-height: 70%;
+            font-size: 64px;
+            font-weight: bold;
+			justify-content: center;
+            margin: 20px 0;
+        }
+		.logo-div img {
+		}
+
+        .logo span {
+            display: block;
+            font-size: 24px;
+            font-weight: normal;
+            margin-top: -10px;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .date-box {
+            border: 1px solid #ffffff;
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .button {
+            margin: 30px 0;
+        }
+
+        .button a {
+            text-decoration: none;
+            display: inline-block;
+            background: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
+            color: #262626;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .note {
+            font-size: 12px;
+            color: #b0b0b0;
         }
 
         .map-container {
@@ -20,7 +102,7 @@
         }
 
         .map {
-            width: 80%; /* Масштабируемая большая карта */
+            width: 80%;
             height: auto;
         }
 
@@ -30,15 +112,24 @@
             cursor: pointer;
             transition: 0.3s;
         }
+		
+		.zone-img {
+            transition: 0.2s;
+			opacity: 0;
+		}
 
-        .zone:hover {
-            border-color: white;
-        }
-
-        .zone.active {
-            background-color: rgba(255, 0, 0, 0.5);
-            border-color: red;
-        }
+		.zone-img-red {
+            transition: 0.2s;
+			opacity: 0;
+		}
+		
+		.zone-img.active {
+			opacity: 1.0;
+		}
+		
+		.zone-img-red.active {
+			opacity: 1.0;
+		}
 
         .time-dots {
             display: flex;
@@ -72,165 +163,333 @@
             width: 80%;
             max-width: 600px;
         }
-		
-		.image-wrapper {
-            display: inline-block; /* Подгоняет размеры под содержимое */
-            position: relative; /* Если нужны вложенные абсолютные элементы */
+
+        .image-wrapper {
+			width: auto;
+            display: block;
+            position: relative;
         }
 
         .image-wrapper img {
-            display: block; /* Убирает лишние отступы (как у inline-block) */
-            width: 100%; /* Масштабирует изображение, если нужны стили */
-            height: auto; /* Сохраняет пропорции */
+            display: block;
+			width: 100%;
+            height: auto;
+        }
+
+        #zone-r {
+            transform: rotate(30deg);
+            transform-origin: top right;
+        }
+
+        #zone-library {
+            transform: rotate(30deg);
+            transform-origin: bottom right;
+        }
+
+        #zone-atrium {
+            transform: rotate(20deg);
+            transform-origin: bottom right;
+        }
+
+        #zone-dg {
+            transform: rotate(20deg);
+            transform-origin: bottom right;
+        }
+
+        #zone-lectorium {
+            transform: rotate(20deg);
+            transform-origin: bottom right;
+        }
+
+        #library-img {
+            position: absolute;
+            top: 5%;
+            left: 30%; 
+            width: 25%;
         }
 		
-		#zone-r {
-			transform: rotate(30deg);
-			transform-origin: top right;
-		}
-		
-		#zone-library {
-			transform: rotate(30deg);
-			transform-origin: bottom right;
-		}
-		
-		#zone-atrium {
-			transform: rotate(20deg);
-			transform-origin: bottom right;
-		}
-		
-		#zone-dg {
-			transform: rotate(20deg);
-			transform-origin: bottom right;
-		}
-		
-		#zone-lectorium {
-			transform: rotate(20deg);
-			transform-origin: bottom right;
-		}
-		
-		#library-img {
+		#cs-img {
 			position: absolute;
-			top: 5%;
-			left: 30%; 
-			width: 25%;
+            top: 59%;
+            left: 79.7%; 
+            width: 20.8%;
+		}
+		
+		#atrium-img {
+			position: absolute;
+            top: 34.5%;
+            left: 17.3%; 
+            width: 18.56%;
+		}
+		
+		#dg-img {
+			position: absolute;
+            top: 60%;
+            left: -1.2%; 
+            width: 31.7%;
+		}
+		
+		#lectorium-img {
+			position: absolute;
+            top: 75.5%;
+            left: 11.4%; 
+            width: 9.5%;
+		}
+		
+		#r-img {
+			position: absolute;
+            top: 20%;
+            left: 49.2%; 
+            width: 33%;
+		}
+		
+        #library-red-img {
+            position: absolute;
+            top: 5%;
+            left: 30%; 
+            width: 25%;
+        }
+		
+		#cs-red-img {
+			position: absolute;
+            top: 59%;
+            left: 79.7%; 
+            width: 20.8%;
+		}
+		
+		#atrium-red-img {
+			position: absolute;
+            top: 34.5%;
+            left: 17.3%; 
+            width: 18.56%;
+		}
+		
+		#dg-red-img {
+			position: absolute;
+            top: 60%;
+            left: -1.2%; 
+            width: 31.7%;
+		}
+		
+		#lectorium-red-img {
+			position: absolute;
+            top: 75.5%;
+            left: 11.4%; 
+            width: 9.5%;
+		}
+		
+		#r-red-img {
+			position: absolute;
+            top: 20%;
+            left: 49.2%; 
+            width: 33%;
+		}
+		
+		#writings {
+			position: absolute;
+            top: 11.1%;
+            left: 2.2%; 
+            width: 97.6%;
+		}
+		
+		.map-content {
+			margin: auto;
+			max-height: 600px;
+			max-width: 600px;
+			padding: 5% 10% 5% 10%;
+		}
+		
+		#logo {
+			width: 75%;
+			height: auto;
 		}
 		
     </style>
 </head>
 <body>
-
-    <div class="image-wrapper">
-        <!-- Большая карта -->
-        <img src="png/map.png" alt="Карта фестиваля" class="map" id="map">
-        <img src="png/library.png" alt="Библиотека" class="library-img" id="library-img">
-		
-        
-        <!-- Кликабельные зоны -->
-        <div class="zone" id="zone-r" style="top: 40%; left: 50%; width: 32%; height: 17%;"></div>
-        <div class="zone" id="zone-library" style="top: 16%; left: 25%; width: 22%; height: 19%;"></div>
-		<div class="zone" id="zone-cs" style="top: 60%; left: 80.5%; width: 19%; height: 24%;"></div>
-		<div class="zone" id="zone-atrium" style="top: 38%; left: 16.5%; width: 11%; height: 29%;"></div>
-		<div class="zone" id="zone-dg" style="top: 68%; left: -4%; width: 27%; height: 40%;"></div>
-		<div class="zone" id="zone-lectorium" style="top: 77%; left: 10%; width: 9%; height: 11%;"></div>
-        <!-- Добавь остальные зоны тут -->
+    <!-- Первый файл -->
+    <div class="nav-bar">
+        <div>плашка навигации</div>
+        <div>плашка навигации</div>
+        <div>плашка навигации</div>
+        <div>плашка навигации</div>
+    </div>
+    <div class="content">
+        <div class="logo-div">
+            <img src="png/logo.png" alt="Дрочь студентов 2025" class="logo" id="logo">
+        </div>
+        <div class="subtitle">Будущее уже сегодня</div>
+        <div class="date-box">
+            24 января — 25 января<br>
+            20:00 — 6:00
+        </div>
+        <div class="button">
+            <a href="#">Регистрация</a>
+        </div>
+        <div class="note">Только для студентов, выпускников и сотрудников НИУ ВШЭ</div>
     </div>
 
-    <!-- Кликабельные кружки времени -->
+	<h1> Карта фестиваля </h1>
+    <!-- Второй файл -->
+	<div class="map-content">
+		<div class="image-wrapper">
+			<img src="png/map.png" alt="Карта фестиваля" class="map" id="map">
+			<img src="png/library.png" alt="Библиотека" class="zone-img active" id="library-img">
+			<img src="png/cs.png" alt="Культурный центр" class="zone-img active" id="cs-img">
+			<img src="png/atrium.png" alt="Атриум" class="zone-img" id="atrium-img">
+			<img src="png/dg.png" alt="Корпус D и G" class="zone-img active" id="dg-img">
+			<img src="png/lectorium.png" alt="Лекторий" class="zone-img active" id="lectorium-img">
+			<img src="png/r.png" alt="Корпус R" class="zone-img active" id="r-img">
+			<img src="png/library-red.png" alt="Библиотека" class="zone-img-red" id="library-red-img">
+			<img src="png/cs-red.png" alt="Культурный центр" class="zone-img-red" id="cs-red-img">
+			<img src="png/atrium-red.png" alt="Атриум" class="zone-img-red active" id="atrium-red-img">
+			<img src="png/dg-red.png" alt="Корпус D и G" class="zone-img-red" id="dg-red-img">
+			<img src="png/lectorium-red.png" alt="Лекторий" class="zone-img-red" id="lectorium-red-img">
+			<img src="png/r-red.png" alt="Корпус R" class="zone-img-red" id="r-red-img">
+			<img src="png/writings.png" alt="Надписи" class="writings" id="writings">
+			
+			<div class="zone" id="zone-r" style="top: 40%; left: 50%; width: 32%; height: 17%;"></div>
+			<div class="zone" id="zone-library" style="top: 16%; left: 25%; width: 22%; height: 19%;"></div>
+			<div class="zone" id="zone-cs" style="top: 60%; left: 80.5%; width: 19%; height: 24%;"></div>
+			<div class="zone active" id="zone-atrium" style="top: 38%; left: 16.5%; width: 11%; height: 29%;"></div>
+			<div class="zone" id="zone-dg" style="top: 68%; left: -4%; width: 27%; height: 40%;"></div>
+			<div class="zone" id="zone-lectorium" style="top: 77%; left: 10%; width: 9%; height: 11%;"></div>
+		</div>
+	</div>
+
     <div class="time-dots">
-        <div class="time-dot" data-hour="20:00"></div>
+        <div class="time-dot active" data-hour="20:00"></div>
         <div class="time-dot" data-hour="21:00"></div>
         <div class="time-dot" data-hour="22:00"></div>
         <div class="time-dot" data-hour="23:00"></div>
-        <div class="time-dot active" data-hour="00:00"></div>
+        <div class="time-dot" data-hour="00:00"></div>
         <div class="time-dot" data-hour="01:00"></div>
         <div class="time-dot" data-hour="02:00"></div>
-        <!-- Добавь остальные часы -->
     </div>
 
-    <!-- Расписание -->
     <div class="schedule" id="schedule">
-        <h3>Корпус R</h3>
-        <p>R302 - МК один "То-се" (00:00 - 01:30)</p>
-        <p>R203 - МК один "Пятое десятое" (23:40 - 02:00)</p>
-        <p>R502 - МК один "О том о сем" (00:00 - 00:45)</p>
+        <h3>Атриум</h3>
+        <p>A:20</p>
     </div>
 
     <script>
-        // Зоны и расписание
         const zones = {
             "zone-r": {
                 title: "Корпус R",
-                schedule: `
-                    <p>R302 - МК один "То-се" (00:00 - 01:30)</p>
-                    <p>R203 - МК один "Пятое десятое" (23:40 - 02:00)</p>
-                    <p>R502 - МК один "О том о сем" (00:00 - 00:45)</p>
-                `
+                schedule: {
+                    "20:00": "R:20",
+                    "21:00": "R:21",
+                    "22:00": "R:22",
+                    "23:00": "R:23",
+                    "00:00": "R:24",
+                    "01:00": "R:25",
+                    "02:00": "R:26"
+                }
             },
             "zone-library": {
                 title: "Библиотека",
-                schedule: `
-                    <p>Лекция "Научное будущее" (20:00 - 21:00)</p>
-                    <p>Мастер-класс "Чтение будущего" (22:00 - 23:00)</p>
-                `
+                schedule: {
+                    "20:00": "Lib:20",
+                    "21:00": "Lib:21",
+                    "22:00": "Lib:22",
+                    "23:00": "Lib:23",
+                    "00:00": "Lib:24",
+                    "01:00": "Lib:25",
+                    "02:00": "Lib:26"
+                }
             },
-			"zone-cs": {
+            "zone-cs": {
                 title: "Культурный центр",
-                schedule: `
-                    <p>Лекция "Научное будущее" (20:00 - 21:00)</p>
-                    <p>Мастер-класс "Чтение будущего" (22:00 - 23:00)</p>
-                `
+                schedule: {
+                    "20:00": "КЦ:20",
+                    "21:00": "КЦ:21",
+                    "22:00": "КЦ:220",
+                    "23:00": "КЦ:23",
+                    "00:00": "КЦ:24",
+                    "01:00": "КЦ:25",
+                    "02:00": "КЦ:26"
+                }
             },
-			"zone-atrium": {
+            "zone-atrium": {
                 title: "Атриум",
-                schedule: `
-                    <p>Лекция "Научное будущее" (20:00 - 21:00)</p>
-                    <p>Мастер-класс "Чтение будущего" (22:00 - 23:00)</p>
-                `
+                schedule: {
+                    "20:00": "A:20",
+                    "21:00": "A:21",
+                    "22:00": "A:22",
+                    "23:00": "A:23",
+                    "00:00": "A:24",
+                    "01:00": "A:25",
+                    "02:00": "A:26"
+                }
             },
-			"zone-dg": {
+            "zone-dg": {
                 title: "Корпус D и G",
-                schedule: `
-                    <p>Лекция "Научное будущее" (20:00 - 21:00)</p>
-                    <p>Мастер-класс "Чтение будущего" (22:00 - 23:00)</p>
-                `
+                schedule: {
+                    "20:00": "D20",
+                    "21:00": "D21",
+                    "22:00": "D22",
+                    "23:00": "D23",
+                    "00:00": "D24",
+                    "01:00": "D25",
+                    "02:00": "D26"
+                }
             },
             "zone-lectorium": {
-                title: "Лекториум",
-                schedule: `
-                    <p>Очень важная лекция (20:00 - 21:00)</p>
-                `
+                title: "Лекторий",
+                schedule: {
+                    "20:00": "L20",
+                    "21:00": "L21",
+                    "22:00": "L22",
+                    "23:00": "L23",
+                    "00:00": "L24",
+                    "01:00": "L25",
+                    "02:00": "L26"
+                }
             }
-        };
-
-        const timeSchedule = {
-            "20:00": "Мероприятия на 20:00 ещё не начались.",
-            "21:00": "Обзорная лекция в атриуме.",
-            "22:00": "Мастер-класс в библиотеке.",
-            "23:00": "Вечеринка в корпусе R.",
-            "00:00": "Основные события корпуса R.",
-            "01:00": "Ночные активности.",
-            "02:00": "Финал лекции в корпусе S."
         };
 
         // Обработчик нажатий на зоны
         const mapZones = document.querySelectorAll(".zone");
         const scheduleDiv = document.getElementById("schedule");
 
-        mapZones.forEach(zone => {
-            zone.addEventListener("click", () => {
-                // Убираем активность у всех зон
-                mapZones.forEach(z => z.classList.remove("active"));
-                // Добавляем активность текущей зоне
-                zone.classList.add("active");
+        let activeZone = "zone-atrium";
+        let activeTime = "20:00"; // По умолчанию
 
-                // Обновляем расписание
-                const zoneData = zones[zone.id];
-                if (zoneData) {
-                    scheduleDiv.innerHTML = `<h3>${zoneData.title}</h3>${zoneData.schedule}`;
-                }
-            });
-        });
+        mapZones.forEach(zone => {
+			zone.addEventListener("click", () => {
+				// Убираем активность у всех зон
+				mapZones.forEach(z => z.classList.remove("active"));
+				// Добавляем активность текущей зоне
+				zone.classList.add("active");
+
+				// Сохраняем активную зону
+				activeZone = zone.id;
+
+				// Обновляем расписание
+				updateSchedule();
+
+				// Прячем все изображения без -red и показываем соответствующее изображение с -red
+				const activeZoneImage = document.getElementById(`${zone.id.replace('zone-', '')}-img`);
+				const activeRedZoneImage = document.getElementById(`${zone.id.replace('zone-', '')}-red-img`);
+
+				// Скрываем все изображения без -red и показываем соответствующие -red
+				document.querySelectorAll('.zone-img').forEach(img => {
+					img.classList.add('active');
+				});
+
+				document.querySelectorAll('.zone-img-red').forEach(img => {
+					img.classList.remove('active');
+				});
+
+				// Показываем изображения
+				if (activeZoneImage) {
+					activeZoneImage.classList.remove('active');
+				}
+				if (activeRedZoneImage) {
+					activeRedZoneImage.classList.add('active');
+				}
+			});
+		});
 
         // Обработчик нажатий на время
         const timeDots = document.querySelectorAll(".time-dot");
@@ -242,13 +501,22 @@
                 // Добавляем активность текущей точке
                 dot.classList.add("active");
 
+                // Сохраняем активное время
+                activeTime = dot.dataset.hour;
+
                 // Обновляем расписание
-                const hour = dot.dataset.hour;
-                if (hour && timeSchedule[hour]) {
-                    scheduleDiv.innerHTML = `<h3>Расписание на ${hour}</h3><p>${timeSchedule[hour]}</p>`;
-                }
+                updateSchedule();
             });
         });
+
+        // Функция для обновления расписания
+        function updateSchedule() {
+            if (activeZone && zones[activeZone] && zones[activeZone].schedule[activeTime]) {
+                const zoneData = zones[activeZone];
+                scheduleDiv.innerHTML = `<h3>${zoneData.title}</h3><p>${zoneData.schedule[activeTime]}</p>`;
+            }
+        }
+
     </script>
 
 </body>
