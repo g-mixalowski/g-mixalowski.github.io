@@ -24,7 +24,12 @@
         }
 
 		h1 {
+			margin-left: 10%;
 			text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+		}
+		
+		div {
+			margin: auto;
 		}
 
         .nav-bar {
@@ -44,15 +49,14 @@
         }
 
         .logo-div {
-			display: block;
+			position: relative;
+			display: inline-block;
 			max-height: 70%;
             font-size: 64px;
             font-weight: bold;
 			justify-content: center;
             margin: 20px 0;
         }
-		.logo-div img {
-		}
 
         .logo span {
             display: block;
@@ -60,10 +64,25 @@
             font-weight: normal;
             margin-top: -10px;
         }
+		
+		#logo {
+			max-width: 80%;
+			pointer-events: none;
+		}
+		
+		.overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(255, 255, 255, 0); 
+			pointer-events: none; /* блокирует клик правой кнопкой мыши */
+		}
 
         .subtitle {
             font-size: 24px;
-            margin: 20px 0;
+            margin: 20px auto;
         }
 
         .date-box {
@@ -175,6 +194,15 @@
 			width: 100%;
             height: auto;
         }
+		
+		.image-wrapper div {
+            display: block;
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+            height: auto;
+		}
 
         #zone-r {
             transform: rotate(30deg);
@@ -299,10 +327,17 @@
 			padding: 5% 10% 5% 10%;
 		}
 		
+		.bottom {
+			background-image: url("png/bottom.png");
+			background-color: #cccccc;
+			background-size: cover;
+			width: 100%;
+			padding-top: 10%;
+		}
+		
     </style>
 </head>
 <body>
-    <!-- Первый файл -->
     <div class="nav-bar">
         <div>плашка навигации</div>
         <div>плашка навигации</div>
@@ -312,6 +347,7 @@
     <div class="content">
         <div class="logo-div">
             <img src="png/logo.png" alt="Дрочь студентов 2025" class="logo" id="logo">
+			<div class="overlay"></div>
         </div>
         <div class="subtitle">Будущее уже сегодня</div>
         <div class="date-box">
@@ -324,8 +360,12 @@
         <div class="note">Только для студентов, выпускников и сотрудников НИУ ВШЭ</div>
     </div>
 
-	<h1> Карта фестиваля </h1>
-    <!-- Второй файл -->
+
+	<h1 align="left"> О фестивале </h1>
+	<p class="about">НОЧЬ Студента 2025 — фестиваль, который погрузит тебя в огромную Вселенную Вышки.</p>
+	<p class="about">НОЧЬ — настоящий проект-коллаборация всех студенческих организаций — именно они проведут тебя по всем галактикам студенчества!</p>
+(((TODO: фотки)))
+	<h1 align="left"> Карта фестиваля </h1>
 	<div class="map-content">
 		<div class="image-wrapper">
 			<img src="png/map.png" alt="Карта фестиваля" class="map" id="map">
@@ -360,6 +400,10 @@
         <div class="time-dot" data-hour="00:00"></div>
         <div class="time-dot" data-hour="01:00"></div>
         <div class="time-dot" data-hour="02:00"></div>
+        <div class="time-dot" data-hour="03:00"></div>
+        <div class="time-dot" data-hour="04:00"></div>
+        <div class="time-dot" data-hour="05:00"></div>
+        <div class="time-dot" data-hour="06:00"></div>
     </div>
 
     <div class="schedule" id="schedule">
@@ -367,6 +411,16 @@
         <p>A:20</p>
     </div>
 
+	<h1 align="left"> Программа фестиваля </h1>
+	TODO
+	
+	<h1 align="left"> Партнёры </h1>
+	TODO
+	
+	<div class="bottom" id="bottom">
+		TODO
+	</div>
+	
     <script>
         const zones = {
             "zone-r": {
